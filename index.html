@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<link href="main.css" type="text/css" rel="stylesheet" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>zazabe - automatic javascript warning for old browser</title>
+</head>
+<body>
+	<h1>automatic javascript warning for old browsers</h1>
+
+	<h2>Goal: a simple solution to avoid old browsers</h2>
+
+	<p>
+		All web developer have problems with old browser, we spend to much time to solve old browser mystical bugs...
+		Maybe as youtube or facebook you want to display a notice for users who has an old browser.
+	</p>
+	
+	<p>I reuse some of this codes to make a unique js file who must be include at the end of your website. He do all the work for you and display a popup at the top of you webpage.</p>
+	
+	<p>This webpage use the lib, try to change your user-agent to see the popup with firefox and the module <a href="https://addons.mozilla.org/en-US/firefox/addon/59/">User-Agent Switcher</a>.</p>
+	
+	
+	<h3>Adventages</h3>
+	
+	<ul>
+		<li>write in native javascript, no conficts with other js libs</li>
+		<li>a simple javascript file to include, nothing to install or upload</li>
+		<li>use a cookie to show the popup only one time</li>
+	</ul>
+	
+	<h2>The simplest way</h2>
+	
+	just put this code at the end of your webpage (just before closing body tag):<br />
+	<textarea cols="120" rows="1"><script type="text/javascript" src="http://zazabe.ismerging.us/browser-warning/browser-warning.min.js"></script></textarea>
+	<br />
+	
+	uncompressed source: <a href="http://zazabe.ismerging.us/browser-warning/browser-warning.auto.js">http://zazabe.ismerging.us/browser-warning/browser-warning.auto.js</a>
+	
+	<h2>Customize the detection</h2>
+  
+	<p>
+	I make a <strong>browserWarning</strong> class in native javascript who try to detect the browser version and launch a callback method if the browser is too old.
+	</p>
+	
+	<h3>Methods</h3>
+	
+	<dl>
+		<dt><strong>constructor - browserWarning(options)</strong></dt>
+		<dd>
+			options: js object<br />
+			options by default, you can change one or more attribute by passing a js object at browserWarning instanciation
+		<pre>
+		
+	{
+		// browser version need to be greater than this values
+		lowerVersionFor: {
+			ie      : 8, 
+			safari  : 4, 
+			opera   : 9.5,
+			firefox : 3, 
+			chrome  : 3
+		},
+		oldByDefault: false, //default detection status
+		cookie: {
+			enabled: true,
+			name:    'browserWarning',
+			value:   'allreadyWarned',
+			expired: null
+		}
+	}
+		</pre>
+		</dd>
+		<dt><strong>browserWarning.test(callback)</strong></dt>
+		<dd>
+			callback: function<br />
+			test if the browser is old and call the callback method in this case.
+		</dd>
+	</dl>
+	
+	<h3>Exemple</h3>
+	
+<pre>
+
+	var badBrowser = new browserWarning({
+		lowerVersionFor: {
+			ie: 7,
+			firefox: 2
+		}
+	});
+	
+	window.onload = function(){
+		badBrowser.test(function(){
+			alert('your browser is too old !');
+		});
+	}
+	
+</pre>
+
+	<h3>source code</h3>
+	
+	 <a href="http://zazabe.ismerging.us/browser-warning/browser-warning.class.js">http://zazabe.ismerging.us/browser-warning/browser-warning.class.js</a>
+	
+	<h2>Used sources</h2>
+
+	I use many differents sources to make this class:
+	<ul>
+		<li><a href="http://blog.team-noir.net/2009/06/fight-old-browsers-warning-with-jquery/">team-noir source code</a>: I reuse the cookie principe</li>
+		<li><a href="http://jquery.com/">jQuery library</a>: I extract the expand method to allow my class to merge to js object (usefull for constructor options)</li>
+		<li><a href="http://www.quirksmode.org/js/detect.html">Peter-Paul Koch's  browser detection code</a></li>
+	</ul>
+	
+	<script type="text/javascript" src="browser-warning.auto.js"></script>
+	
+	<h2>Contact</h2>
+	
+	<p>My name is Michel Meyer, for any questions or support, contact me: michel[<strong>at</strong>]zazabe.fr</p>
+
+</body>
+</html>
